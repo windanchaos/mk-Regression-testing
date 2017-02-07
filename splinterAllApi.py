@@ -70,6 +70,10 @@ browser.click_link_by_id('link_id')
 # element is visible or invisible
 browser.find_by_css('h1').first.visible
 
+#fill content
+browser.find_by_id('productName').fill('splinter - python acceptance testing for web applications')
+browser.fill('q', 'splinter - python acceptance testing for web applications')
+
 # Verifying if element has a className
 browser.find_by_css('.content').first.has_class('content')
 # click button
