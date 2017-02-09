@@ -1,5 +1,5 @@
 from splinter import Browser
-
+import time
 accout = "18781901199"
 passport = "miang521"
 backgroundURL="http://shop.aiyaohong.com"
@@ -25,6 +25,19 @@ browser.find_by_id('productCode').fill(productCode)
 
 browser.find_by_text('添加规格项目').click()
 browser.find_by_text('添加规格').click()
+browser.find_by_xpath('//*[@id="addSkuWindow"]/div/div/fieldset[1]/div/div/span/span/input').fill('净含量')
+browser.find_by_xpath('//*[@id="toAddSku"]').click()
+
+
+browser.find_by_xpath('//*[@id="addSpecV_0"]/a').mouse_over()
+time.sleep(11)
+# browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('1L')
+# browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
+# time.sleep(1)
+# browser.find_by_xpath('//*[@id="addSpecV_0"]/a').click()
+# browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('2L')
+# browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
+
 # browser.find_by_name('k-widget k-window').find_by_name('k-input').fill('尺寸')
 # browser.find_by_value('确定').click()
 # browser.find_by_name('link-primary noEdit').click()
