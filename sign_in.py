@@ -1,5 +1,6 @@
 from splinter import Browser
-import time
+import time, sys
+import random
 accout = "18781901199"
 passport = "miang521"
 backgroundURL="http://shop.aiyaohong.com"
@@ -8,11 +9,13 @@ shortDes='回归测试商品.....'
 productCode='11211123'
 
 browser = Browser('chrome')
+browser
 browser.visit(backgroundURL)
 browser.fill('account', accout)
 browser.fill('password', passport)
 browser.find_by_value('登    录').click()
-
+print(browser.cookies.all())
+print(browser.windows.current)
 browser.find_by_text('商品管理').click()
 browser.find_by_text('商品仓库').click()
 browser.find_by_text('发布商品').click()
@@ -23,25 +26,56 @@ browser.find_by_id('productName').fill(productName)
 browser.find_by_id('shortDes').fill(shortDes)
 browser.find_by_id('productCode').fill(productCode)
 
+# 商品规格
 browser.find_by_text('添加规格项目').click()
 browser.find_by_text('添加规格').click()
 browser.find_by_xpath('//*[@id="addSkuWindow"]/div/div/fieldset[1]/div/div/span/span/input').fill('净含量')
 browser.find_by_xpath('//*[@id="toAddSku"]').click()
 
+time.sleep(2)
+browser.find_by_xpath('//*[@id="addSpecV_0"]').click()
+time.sleep(1)
+browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').click()
+browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('1L')
+browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
+time.sleep(2)
+browser.find_by_xpath('//*[@id="addSpecV_0"]/a').click()
+time.sleep(1)
+browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('2L')
+browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
 
-browser.find_by_xpath('//*[@id="addSpecV_0"]/a').mouse_over()
-time.sleep(11)
-# browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('1L')
-# browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
-# time.sleep(1)
-# browser.find_by_xpath('//*[@id="addSpecV_0"]/a').click()
-# browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('2L')
-# browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
+# 规格挂牌价格
+time.sleep(2)
+print(browser.is_element_present_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span/input[1]'))
+print(browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span/input[1]').first.click())
+print(browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span/input[1]').first.fill(12))
+browser.find_by_xpath('//*[@id="quto_yes"]').click()
+# 规格售卖价格
+browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[2]/span[2]/span/input[1]').fill('1.2')
+browser.find_by_xpath('//*[@id="sale_yes"]').click()
+# 库存
+browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[3]/span[2]/span/input[1]').fill('1.2')
+browser.find_by_xpath('//*[@id="inventory_yes"]').click()
+# sku编码
+browser.find_by_xpath('//*[@id="batch_skuCode"]').fill('21212')
+browser.find_by_xpath('//*[@id="code_yes"]').click()
 
-# browser.find_by_name('k-widget k-window').find_by_name('k-input').fill('尺寸')
-# browser.find_by_value('确定').click()
-# browser.find_by_name('link-primary noEdit').click()
-# browser.fill('k-input', '尺寸')
-# browser.find_by_value('添加').click()
-# browser.find_by_name('k-icon k-i-arrow-s').click()
-# browser.find_by_text('L').click()
+# 销售记录/购买记录，库存显示设置
+time.sleep(1)
+
+browser.find_by_xpath('//*[@id="productInfo"]/div[4]/div[2]/div[2]/div[4]/label[1]').click()
+browser.find_by_xpath('//*[@id="productInfo"]/div[4]/div[2]/div[2]/div[4]/label[1]').click()
+
+# 分享设置
+browser.find_by_xpath('//*[@id="productInfo"]/div[5]/div[2]/div/div[1]/div/div/button').click()
+time.sleep(2)
+browser.find_by_xpath('//*[@id="1048_catalogName"]').click()
+# 随机选取图片
+imgNo = random.random(1, 15)
+imgXpath = "\'//*[@id=\"listView\"]/li[" + imgNo + "]/div[1]/a/img"
+print(imgXpath)
+browser.find_by_xpath(imgXpath).click()
+browser.find_by_xpath('//*[@id="saveProductImage"]').click()
+
+
+
