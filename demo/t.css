@@ -1,0 +1,25 @@
+.body {
+    background: gray;
+    box-shadow: 0 0 0 1px #A2A2A2, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);
+    color: #FFFFFF;
+    font-family: "Î¢ÈíÑÅºÚ" , "ËÎÌå" , "ºÚÌå" ,Arial;
+    font-weight: bold;
+    height: auto;
+    line-height: 25px;
+    margin: 18px 0 !important;
+    padding: 5px 8px 8px 5px;
+    text-shadow: 2px 2px 3px #222222;
+    width: -moz-fit-content;
+}
+.bodyChange {
+    background: blue;
+    box-shadow: 0 0 0 1px #A2A2A2, 1px 1px 6px 1px rgba(10, 10, 0, 0.5);
+    color: #FFFF00;
+    font-family: "Î¢ÈíÑÅºÚ" , "ËÎÌå" , "ºÚÌå" ,Arial;
+    font-weight: bold;
+    height: auto;
+    line-height: 25px;
+    margin: 18px 0 !important;
+    padding: 5px 8px 8px 5px;
+    text-shadow: 2px 2px 3px #222222;
+}
