@@ -1,17 +1,17 @@
 from splinter import Browser
-import time, sys
+import time
+import sys
 import random
-accout = "18781901199"
+account = "18781901199"
 passport = "miang521"
-backgroundURL="http://shop.aiyaohong.com"
-productName='回归测试商品'
-shortDes='回归测试商品.....'
-productCode='11211123'
+backgroundURL = "http://shop.aiyaohong.com"
+productName = '回归测试商品'
+shortDes = '回归测试商品.....'
+productCode = '11211123'
 
 browser = Browser('chrome')
-browser
 browser.visit(backgroundURL)
-browser.fill('account', accout)
+browser.fill('account', account)
 browser.fill('password', passport)
 browser.find_by_value('登    录').click()
 print(browser.cookies.all())
@@ -35,7 +35,7 @@ browser.find_by_xpath('//*[@id="toAddSku"]').click()
 time.sleep(2)
 browser.find_by_xpath('//*[@id="addSpecV_0"]').click()
 time.sleep(1)
-browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').click()
+browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]span/span/input').click()
 browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('1L')
 browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
 time.sleep(2)
@@ -43,14 +43,18 @@ browser.find_by_xpath('//*[@id="addSpecV_0"]/a').click()
 time.sleep(1)
 browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('2L')
 browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
+browser.evaluate_script('document.getElementsByID("toEidtDetail").style.background-color="red"')
+# 规格挂牌价格 //*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span
 
-# 规格挂牌价格
+# xpath = '//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span'
+classname = "k-numeric-wrap k-state-default"
+browser.evaluate_script('document.getElementsByClassName(classname).class = classname"')
+browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span/input[1]').double_click()
 time.sleep(2)
-print(browser.is_element_present_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span/input[1]'))
-print(browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span/input[1]').first.click())
-print(browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span/input[1]').first.fill(12))
+browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span/input[1]').first.fill(12)
 browser.find_by_xpath('//*[@id="quto_yes"]').click()
-# 规格售卖价格
+
+# 规格售卖价格 //*[@id="skuShow"]/div[1]/div/div[2]/div[2]/span[2]/span
 browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[2]/span[2]/span/input[1]').fill('1.2')
 browser.find_by_xpath('//*[@id="sale_yes"]').click()
 # 库存
@@ -76,6 +80,3 @@ imgXpath = "\'//*[@id=\"listView\"]/li[" + imgNo + "]/div[1]/a/img"
 print(imgXpath)
 browser.find_by_xpath(imgXpath).click()
 browser.find_by_xpath('//*[@id="saveProductImage"]').click()
-
-
-
