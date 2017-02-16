@@ -3,6 +3,7 @@ import time
 import sys
 
 # copy t.html to tomcat/webapp/ROOT/
+# this demo shows that js can't change the class of element.
 browser = Browser('chrome')
 browser.visit("http://localhost:8080/t.html")
 time.sleep(2)

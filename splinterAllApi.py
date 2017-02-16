@@ -118,9 +118,9 @@ browser.find_by_css('.city').fill('San Francisco')
 
 # Dealing with HTTP status code and exceptions
 browser.visit('http://cobrateam.info')
-browser.status_code.is_success() # True
-browser.status_code == 200 # True
-browser.status_code.code # 200
+browser.status_code.is_success()  # True
+browser.status_code == 200  # True
+browser.status_code.code  # 200
 # try:
 # browser.visit('http://cobrateam.info/i-want-cookies')
 # except HttpResponseError, e:
