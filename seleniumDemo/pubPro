@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://passpt.aiyaohong.com/" />
+<title>pubPro</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">pubPro</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/?refer=shop</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=account</td>
+	<td>18781901199</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=password</td>
+	<td>miang521</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=div.btns-box &gt; #login-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.nav-title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//li[2]/a/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=addProduct</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=item_2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=next</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=productName</td>
+	<td>自动测试商品</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=shortDes</td>
+	<td>自动测试商品</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=addSpec</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@onclick='openSelSpecWindow(this);']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='addSkuWindow']/div/div/fieldset/div/div/span/span/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=toAddSku</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=+添加</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@onclick='addSkuValue();']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=+添加</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='skuValueWindow']/div/div/fieldset/div/div/span/span/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@onclick='addSkuValue();']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=+添加</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='skuValueWindow']/div/div/fieldset/div/div/span/span/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@onclick='addSkuValue();']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>tpye</td>
+	<td>id=batch_quto</td>
+	<td>1.1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@type='text'])[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=batch_sale</td>
+	<td>1.1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@type='text'])[8]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=batch_inventory</td>
+	<td>11</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@type='text'])[10]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=batch_skuCode</td>
+	<td>1213441</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=code_yes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=chkSkuImg</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.col-sm-2 &gt; button.btn.btn-default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[title=&quot;e29e34ce01554dccba39836ee9ef6fb8.jpg&quot;] &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=saveProductImage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=div.clearfix &gt; button.btn.btn-default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[title=&quot;c60cf67154734fdd87a5571a354140e2.jpg&quot;] &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=saveProductImage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=shareTitle</td>
+	<td>分享设置</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=shareContent</td>
+	<td>分享内容测试</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@onclick=&quot;openImgSpace('squareShow',5);&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[title=&quot;c44ba518b7354aef85f9a9c71592ea2f.jpg&quot;] &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[title=&quot;c44ba518b7354aef85f9a9c71592ea2f.jpg&quot;] &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[title=&quot;b92ff375862a4ca48d6c912eb7f62566.jpg&quot;] &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[title=&quot;b4c9559a21ba48959774fcb63ecc8e10.jpg&quot;] &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[title=&quot;add2a696e4c74325875cfec45f51d7e7.jpg&quot;] &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=saveProductImage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@onclick=&quot;openImgSpace('rectangleShow',1);&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1045_catalogName</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=1047_catalogName</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a[title=&quot;5c873b7bf3bb95cbbc452c2f935f31ff.jpg&quot;] &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=saveProductImage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@name='shippingType'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//ul[@id='selectShippingTemplate_listbox']/li</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=logisticsWeight_2334</td>
+	<td>500</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@type='text'])[36]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=logisticsWeight_2504</td>
+	<td>1000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@type='text'])[38]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=logisticsWeight_2523</td>
+	<td>1500</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>name=saleType</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//input[@name='stockReduceType'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=toOn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=确定</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//button[@onclick='addSkuValue();']</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
