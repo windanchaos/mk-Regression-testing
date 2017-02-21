@@ -51,7 +51,9 @@ browser.evaluate_script('document.getElementById("batch_quto").contentEditable =
 # browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span/input[1]').fill(12)
 browser.find_by_id('batch_quto').fill("120")
 browser.evaluate_script('document.getElementById("batch_quto").style="display: none; visibility: visible;"')
-
+# jqury方法
+browser.evaluate_script('$(".mk-product-body").scrollTop(500);')
+browser.evaluate_script('window.scrollTo(0,500)')
 
 #browser.find_by_xpath("(//input[@type='text'])[6]").click()
 # browser.find_by_xpath('//*[@id="skuShow"]/div[1]/div/div[2]/div[1]/span[2]/span/input[1]').fill(12)
