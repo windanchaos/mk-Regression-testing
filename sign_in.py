@@ -1,147 +1,184 @@
 from splinter import Browser
-import time, sys
-import random
-accout = "18781901199"
-passport = "miang521"
-backgroundURL="http://shop.aiyaohong.com"
-productName='回归测试商品'
-shortDes='回归测试商品.....'
-productCode='11211123'
+import time, sys, return_input
+import random, unittest
+# 修改了splinter默认点击元素的click方法，增加延迟0.5秒
 
-# browser = Browser('chrome', fullscreen=True)
-browser = Browser('chrome',)
+def login_console():
+    """登陆后台统一方法"""
+    accout = "18781901199"
+    passport = "miang521"
+    backgroundURL = "http://shop.aiyaohong.com"
+    browser.visit(backgroundURL)
+    browser.fill('account', accout)
+    browser.fill('password', passport)
+    browser.find_by_value('登    录').click()
+
+
+def choose_picture():
+    """选择图片控件统一方法"""
+    time.sleep(0.5)
+    picture_group=['方图','方图二','方图三']
+    browser.find_by_text(picture_group[random.randint(0,2)]).click()
+    time.sleep(0.5)
+    # 随机选取图片的分页
+    browser.find_by_xpath(return_input.random_xpath('//*[@id="pager"]/ul/li[',random.randint(2,3),']')).first.click()
+    # 拼接成随机点击的图片排列，并使用js执行动作。
+    browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[',random.randint(0,14),'].click()'))
+    browser.find_by_id("saveProductImage").click()
+    time.sleep(0.5)
+
+
+def jump_to_navi(nav_title,nav_title2):
+    """ 选择后台左侧导航栏，仅两级"""
+    browser.find_by_text(nav_title).click()
+    browser.find_by_text(nav_title2).click()
+
+class pub_product:
+    # 变量
+    productName = return_input.productName
+    shortDes = return_input.shortDes
+    productCode = return_input.random_special_charactor()
+    share_title = return_input.share_title
+    share_content = return_input.share_content
+    def jump_to_edit(self,browser):
+        browser.find_by_text('发布商品').click()
+        browser.find_by_id(return_input.random_xpath('item_', random.randint(1, 5))).first.click()
+        browser.find_by_text('下一步').click()
+
+    def fill_product_info(self,browser):
+        # 商品基本信息
+        browser.find_by_id('productName').fill(self.productName)
+        browser.find_by_id('shortDes').fill(self.shortDes)
+        browser.find_by_id('productCode').fill(self.productCode)
+
+    def fill_sku_name(self,browser):
+        # 商品规格
+        browser.find_by_text('添加规格项目').click()
+        browser.find_by_text('添加规格').click()
+        browser.find_by_xpath('//*[@id="addSkuWindow"]/div/div/fieldset[1]/div/div/span/span/input').fill('尺码')
+        browser.find_by_xpath('//*[@id="toAddSku"]').click()
+        time.sleep(0.5)
+        browser.find_by_xpath('//*[@id="addSpecV_0"]').click()
+        time.sleep(0.5)
+        browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').click()
+        browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('L')
+        time.sleep(0.5)
+        browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
+        time.sleep(0.5)
+        browser.find_by_xpath('//*[@id="addSpecV_0"]/a').click()
+        time.sleep(0.5)
+        browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input'). \
+            fill(return_input.product_sku)
+        browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
+
+    def fill_sku_price(self,browser):
+        # 规格挂牌价格
+        browser.evaluate_script(
+            'document.getElementById("batch_quto").style="display: inline-block; visibility: visible;"')
+        browser.find_by_id('batch_quto').fill(return_input.sku_quto)
+        browser.evaluate_script('document.getElementById("batch_quto").style="display: none; visibility: visible;"')
+        time.sleep(0.5)
+        browser.find_by_xpath('//*[@id="quto_yes"]').click()
+
+        browser.evaluate_script(
+            'document.getElementById("batch_sale").style="display: inline-block; visibility: visible;"')
+        browser.find_by_id('batch_sale').fill(return_input.sku_price)
+        browser.evaluate_script('document.getElementById("batch_sale").style="display: none; visibility: visible;"')
+        browser.find_by_id("sale_yes").click()
+
+        browser.evaluate_script(
+            'document.getElementById("batch_inventory").style="display: inline-block; visibility: visible;"')
+        browser.find_by_id('batch_inventory').fill(return_input.p_inventory)
+        browser.evaluate_script(
+            'document.getElementById("batch_inventory").style="display: none; visibility: visible;"')
+        browser.find_by_id("inventory_yes").click()
+
+        browser.find_by_id("batch_skuCode").fill(return_input.skuCode)
+        browser.find_by_id("code_yes").click()
+        time.sleep(0.5)
+        browser.evaluate_script('$("#chkSkuImg").click()')
+        browser.evaluate_script('$(".mk-product-body").scrollTop(500)')
+        browser.evaluate_script('window.scrollTo(0,0)')
+
+    def set_sku_picture(self,browser):
+        # sku 图片设置
+        browser.find_by_xpath('//*[@id="skuImgTable"]/tbody/tr/td/div[1]/button').click()
+        choose_picture()
+        browser.find_by_xpath('//*[@id="skuImgTable"]/tbody/tr/td/div[2]/button').click()
+        choose_picture()
+
+    def choose_SoldQty_Inventory(self,browser):
+        """勾选：商城是否显示销量和购买记录   商城是否显示库存"""
+        browser.evaluate_script('$("#displaySoldQty").click()')
+        browser.evaluate_script('$("#displayInventory").click()')
+        browser.evaluate_script('$(".mk-product-body").scrollTop(1500)')
+
+    def set_share(self,browser):
+        """设置分享内容"""
+        browser.find_by_xpath('//*[@id="productInfo"]/div[5]/div[2]/div/div[1]/div/div/button').click()
+        time.sleep(0.5)
+        choose_picture()
+        browser.evaluate_script('$(".mk-product-body").scrollTop(1800)')
+        browser.find_by_id('shareTitle').fill(self.share_title)
+        browser.find_by_id('shareContent').fill(self.share_content)
+
+    def set_product_picuture(self,browser):
+        """配置图片"""
+        # 方图
+        browser.evaluate_script('$(".mk-product-body").scrollTop(2200)')
+        browser.find_by_xpath('//*[@id="productInfo"]/div[6]/div[2]/div/div[1]/div/button').click()
+
+        for i in range(0,4):
+            choose_picture()
+        # 宽图
+        browser.find_by_xpath('//*[@id="productInfo"]/div[6]/div[2]/div/div[3]/div/button').click()
+        time.sleep(0.5)
+        browser.find_by_text('长图一服装').click()
+        time.sleep(0.5)
+        browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[',random.randint(0,14),'].click()'))
+        browser.find_by_xpath('//*[@id="saveProductImage"]').click()
+        time.sleep(0.5)
+        browser.evaluate_script('$(".mk-product-body").scrollTop(2000)')
+
+    def set_shipping_free(self,browser):
+        # 运费设置
+        browser.find_by_xpath("(//input[@name='shippingType'])[2]").click()
+        browser.find_by_text('请选择').click()
+        time.sleep(0.5)
+        browser.find_by_text('四川免运').click()
+
+    def set_logisticsWeight(self,browser):
+        # 物流重量，使用jquery填充和单击输入框
+        browser.evaluate_script('$("input[id^=\'logisticsWeight\']").first().val("500")')
+        browser.evaluate_script('$("input[class=\'k-formatted-value noEdit k-input\']").first().click()')
+        browser.evaluate_script('$("input[id^=\'logisticsWeight\'").last().val("1500")')
+        browser.evaluate_script('$("input[class=\'k-formatted-value noEdit k-input\']").last().click()')
+
+    def set_sale_type(self,browser):
+        browser.find_by_name("saleType").click()
+        browser.find_by_xpath("(//input[@name='stockReduceType'])[2]").click()
+        browser.find_by_id("toOn").click()
+        time.sleep(0.5)
+        browser.find_by_xpath('/html/body/div[1]/div/div[3]/a').click()
+
+# runTest
+
+browser = Browser('chrome', )
 browser.driver.set_window_size(1600, 1000)
-browser.visit(backgroundURL)
-browser.fill('account', accout)
-browser.fill('password', passport)
-browser.find_by_value('登    录').click()
-print(browser.cookies.all())
-print(browser.windows.current)
-browser.find_by_text('商品管理').click()
-browser.find_by_text('商品仓库').click()
-browser.find_by_text('发布商品').click()
-browser.find_by_id('item_2').click()
-browser.find_by_text('下一步').click()
+login_console()
+jump_to_navi('商品管理', '商品仓库')
+pub = pub_product()
+pub.jump_to_edit(browser)
+pub.fill_product_info(browser)
+pub.fill_sku_name(browser)
+pub.fill_sku_price(browser)
+pub.set_product_picuture(browser)
+pub.choose_SoldQty_Inventory(browser)
+pub.set_share(browser)
+pub.set_product_picuture(browser)
+pub.set_shipping_free(browser)
+pub.set_sale_type(browser)
 
-browser.find_by_id('productName').fill(productName)
-browser.find_by_id('shortDes').fill(shortDes)
-browser.find_by_id('productCode').fill(productCode)
-
-# 商品规格
-browser.find_by_text('添加规格项目').click()
-browser.find_by_text('添加规格').click()
-browser.find_by_xpath('//*[@id="addSkuWindow"]/div/div/fieldset[1]/div/div/span/span/input').fill('净含量')
-browser.find_by_xpath('//*[@id="toAddSku"]').click()
-
-time.sleep(1)
-browser.find_by_xpath('//*[@id="addSpecV_0"]').click()
-time.sleep(1)
-browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').click()
-browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('1L')
-browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
-time.sleep(1)
-browser.find_by_xpath('//*[@id="addSpecV_0"]/a').click()
-time.sleep(1)
-browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input').fill('2L')
-browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
-
-# 规格挂牌价格
-# 以下4行代码耗费我3天的时间实验验证得出
-
-browser.evaluate_script('document.getElementById("batch_quto").style="display: inline-block; visibility: visible;"')
-browser.find_by_id('batch_quto').fill("120")
-browser.evaluate_script('document.getElementById("batch_quto").style="display: none; visibility: visible;"')
-time.sleep(1)
-browser.find_by_xpath('//*[@id="quto_yes"]').click()
-
-browser.evaluate_script('document.getElementById("batch_sale").style="display: inline-block; visibility: visible;"')
-browser.find_by_id('batch_sale').fill("1.12")
-browser.evaluate_script('document.getElementById("batch_sale").style="display: none; visibility: visible;"')
-browser.find_by_id("sale_yes").click()
-
-browser.evaluate_script('document.getElementById("batch_inventory").style="display: inline-block; visibility: visible;"')
-browser.find_by_id('batch_inventory').fill("1233")
-browser.evaluate_script('document.getElementById("batch_inventory").style="display: none; visibility: visible;"')
-browser.find_by_id("inventory_yes").click()
-
-browser.find_by_id("batch_skuCode").fill("1213441")
-browser.find_by_id("code_yes").click()
-time.sleep(1)
-browser.evaluate_script('$("#chkSkuImg").click()')
-# browser.find_by_id("chkSkuImg").click()
-
-browser.evaluate_script('$(".mk-product-body").scrollTop(500)')
-browser.evaluate_script('window.scrollTo(0,0)')
-# sku 图片设置
-browser.find_by_xpath('//*[@id="skuImgTable"]/tbody/tr/td/div[1]/button').click()
-time.sleep(0.5)
-browser.find_by_text('方图三').click()
-time.sleep(0.5)
-browser.evaluate_script('$("li[onclick]")[14].click()')
-browser.find_by_id("saveProductImage").click()
-time.sleep(0.5)
-browser.find_by_xpath('//*[@id="skuImgTable"]/tbody/tr/td/div[2]/button').click()
-time.sleep(0.5)
-browser.find_by_text('方图二').click()
-time.sleep(0.5)
-browser.evaluate_script('$("li[onclick]")[12].click()')
-browser.find_by_id("saveProductImage").click()
-time.sleep(0.5)
-# 销售库存设置
-browser.evaluate_script('$("#displaySoldQty").click()')
-browser.evaluate_script('$("#displayInventory").click()')
-browser.evaluate_script('$(".mk-product-body").scrollTop(1500)')
-# 分享设置
-browser.find_by_id("shareTitle").fill(u"自动测试脚本分享设置")
-browser.find_by_id("shareContent").fill(u"自动测试脚本发布商品。。。。。。")
-browser.find_by_xpath('//*[@id="productInfo"]/div[5]/div[2]/div/div[1]/div/div/button').click()
-time.sleep(0.5)
-browser.find_by_text('方图二').click()
-time.sleep(0.5)
-browser.evaluate_script('$("li[onclick]")[11].click()')
-time.sleep(0.5)
-browser.find_by_id("saveProductImage").click()
-time.sleep(0.5)
-
-# 商品图片设置
-#  宽图
-browser.evaluate_script('$(".mk-product-body").scrollTop(1800)')
-browser.find_by_xpath('//*[@id="productInfo"]/div[6]/div[2]/div/div[1]/div/button').click()
-time.sleep(0.5)
-browser.find_by_text('方图三').click()
-time.sleep(0.5)
-browser.evaluate_script('$("li[onclick]")[1].click()')
-browser.evaluate_script('$("li[onclick]")[13].click()')
-browser.evaluate_script('$("li[onclick]")[7].click()')
-browser.evaluate_script('$("li[onclick]")[2].click()')
-browser.find_by_xpath('//*[@id="saveProductImage"]').click()
-time.sleep(0.5)
-# 长图
-browser.find_by_xpath('//*[@id="productInfo"]/div[6]/div[2]/div/div[3]/div/button').click()
-time.sleep(0.5)
-browser.find_by_text('长图一服装').click()
-time.sleep(0.5)
-browser.evaluate_script('$("li[onclick]")[14].click()')
-browser.find_by_xpath('//*[@id="saveProductImage"]').click()
-time.sleep(0.5)
-browser.evaluate_script('$(".mk-product-body").scrollTop(2000)')
-# 运费设置
-browser.find_by_xpath("(//input[@name='shippingType'])[2]").click()
-browser.find_by_text('请选择').click()
-time.sleep(0.5)
-browser.find_by_text('四川免运').click()
-
-# 物流重量，使用jquery填充和单击输入框
-browser.evaluate_script('$("input[id^=\'logisticsWeight\']").first().val("500")')
-browser.evaluate_script('$("input[class=\'k-formatted-value noEdit k-input\']").first().click()')
-browser.evaluate_script('$("input[id^=\'logisticsWeight\'").last().val("1500")')
-browser.evaluate_script('$("input[class=\'k-formatted-value noEdit k-input\']").last().click()')
-
-browser.find_by_name("saleType").click()
-browser.find_by_xpath("(//input[@name='stockReduceType'])[2]").click()
-browser.find_by_id("toOn").click()
-time.sleep(0.5)
-browser.find_by_xpath('/html/body/div[1]/div/div[3]/a').click()
 
 
 
