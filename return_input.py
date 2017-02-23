@@ -8,15 +8,6 @@ import time, sys, random
 随机给范围数字
 '''
 
-
-def random_number_int(number):
-    """
-    随机给出范围内的整数,有random.randint(1,50)
-    :param number: 范围最大值
-    :return:
-    """
-    return int(random.random() * number)
-
 def random_number_float(number):
     """
     随机给出范围内的两位实数
@@ -31,11 +22,6 @@ def date_uni_string(your_str):
     """
     return  time.strftime("%Y-%m-%d日%H:%M", time.localtime())+your_str
 
-def test_random_number_int():
-    print("random_number_int test====")
-    for i in range(1, 10):
-        print(random_number_int(5))
-
 def random_xpath(part1,random_number,part2):
     """
     返回随机的xpath或者其他类似的元素路径
@@ -44,14 +30,14 @@ def random_xpath(part1,random_number,part2):
     :param part2: 路径后半部分
     :return: 全路径
     """
-    return part1+str(random_number_int(random_number))+part2
+    return part1+str(random.randint(0,random_number))+part2
 
 def test_random_number_float():
     print("random_number_float test====")
     for i in range(1, 10):
         print(random_number_float(5))
 
-test_random_number_int()
+
 test_random_number_float()
 print(date_uni_string("测试商品"))
 print(random_xpath('//*[@id="addSkuWindow"]/div/div/fieldset[',12,']/div/div/span/span/input'))
