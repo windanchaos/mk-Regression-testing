@@ -14,23 +14,34 @@ def login_console():
     browser.fill('password', passport)
     browser.find_by_value('登    录').click()
 
-
 def choose_picture(n=1):
     """
     选择图片控件统一方法
     :param n: 选择的图片数
     """
-    for i in range(1,n):
+    if(n>1):
+        for i in range(1,n):
+            time.sleep(0.5)
+            picture_group=['方图','方图二','方图三']
+            browser.find_by_text(picture_group[random.randint(0,2)]).first.click()
+            time.sleep(0.5)
+            if random.randint(1,2) == 1:
+                browser.find_by_xpath('//*[@id="pager"]/ul/li[2]/span').first.click()
+            else:
+                browser.find_by_xpath('//*[@id="pager"]/ul/li[3]/a').first.click()
+            # 拼接成随机点击的图片排列，并使用js执行动作。
+            browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[',0,14,'].click()'))
+    else:
         time.sleep(0.5)
-        picture_group=['方图','方图二','方图三']
-        browser.find_by_text(picture_group[random.randint(0,2)]).click()
+        picture_group = ['方图', '方图二', '方图三']
+        browser.find_by_text(picture_group[random.randint(0, 2)]).first.click()
         time.sleep(0.5)
-        if random.randint(1,2) == 1:
+        if random.randint(1, 2) == 1:
             browser.find_by_xpath('//*[@id="pager"]/ul/li[2]/span').first.click()
         else:
             browser.find_by_xpath('//*[@id="pager"]/ul/li[3]/a').first.click()
         # 拼接成随机点击的图片排列，并使用js执行动作。
-        browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[',0,14,'].click()'))
+        browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[', 0, 14, '].click()'))
     browser.find_by_id("saveProductImage").click()
     time.sleep(0.5)
 
@@ -44,7 +55,7 @@ class pub_product:
     # 变量
     productName = return_input.productName
     shortDes = return_input.shortDes
-    productCode = return_input.random_special_charactor()
+    productCode = return_input.random_special_charactor()+'MAIKEt'
     share_title = return_input.share_title
     share_content = return_input.share_content
     def jump_to_edit(self,browser):
@@ -77,6 +88,7 @@ class pub_product:
         browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[1]/span/span/input'). \
             fill(return_input.product_sku)
         browser.find_by_xpath('//*[@id="skuValueWindow"]/div/div/fieldset/div/div[2]/button').click()
+        browser.evaluate_script('$(".mk-product-body").scrollTop(1000)')
 
     def fill_sku_price(self,browser):
         # 规格挂牌价格
@@ -103,42 +115,40 @@ class pub_product:
         browser.find_by_id("batch_skuCode").fill(return_input.skuCode)
         browser.find_by_id("code_yes").click()
         time.sleep(0.5)
-        browser.evaluate_script('$("#chkSkuImg").click()')
 
-
-    def set_share(self,browser):
-        """设置分享内容"""
-        browser.evaluate_script('$(".mk-product-body").scrollTop(1000)')
-        browser.evaluate_script('window.scrollTo(0,0)')
-        time.sleep(0.5)
-        browser.find_by_xpath('//*[@id="productInfo"]/div[5]/div[2]/div/div[1]/div/div/button').click()
-        time.sleep(0.5)
-        choose_picture()
-        browser.evaluate_script('$(".mk-product-body").scrollTop(1800)')
-        browser.find_by_id('shareTitle').fill(self.share_title)
-        browser.find_by_id('shareContent').fill(self.share_content)
 
     def set_sku_picture(self,browser):
-        # sku 图片设置
+        # sku 图片设置 //*[@id="skuImgTable"]/tbody/tr/td/div[1]/button
+        browser.evaluate_script('$("#chkSkuImg").click()')
         browser.find_by_xpath('//*[@id="skuImgTable"]/tbody/tr/td/div[1]/button').click()
-        choose_picture()
+        choose_picture(1)
         browser.find_by_xpath('//*[@id="skuImgTable"]/tbody/tr/td/div[2]/button').click()
-        choose_picture()
+        choose_picture(1)
+
 
     def choose_SoldQty_Inventory(self,browser):
         """勾选：商城是否显示销量和购买记录   商城是否显示库存"""
         browser.evaluate_script('$("#displaySoldQty").click()')
         browser.evaluate_script('$("#displayInventory").click()')
-        browser.evaluate_script('$(".mk-product-body").scrollTop(1500)')
+        browser.evaluate_script('$(".mk-product-body").scrollTop(2000)')
 
+
+    def set_share(self,browser):
+        """设置分享内容"""
+        browser.evaluate_script('window.scrollTo(0,0)')
+        time.sleep(0.5)
+        browser.find_by_xpath('//*[@id="productInfo"]/div[5]/div[2]/div/div[1]/div/div/button').click()
+        time.sleep(0.5)
+        choose_picture()
+        browser.find_by_id('shareTitle').fill(self.share_title)
+        browser.find_by_id('shareContent').fill(self.share_content)
 
 
     def set_product_picuture(self,browser):
         """配置图片"""
         # 方图
-        browser.evaluate_script('$(".mk-product-body").scrollTop(2200)')
         browser.find_by_xpath('//*[@id="productInfo"]/div[6]/div[2]/div/div[1]/div/button').click()
-        choose_picture(3)
+        choose_picture(4)
         # 宽图
         browser.find_by_xpath('//*[@id="productInfo"]/div[6]/div[2]/div/div[3]/div/button').click()
         time.sleep(0.5)
@@ -147,7 +157,8 @@ class pub_product:
         browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[',0,14,'].click()'))
         browser.find_by_xpath('//*[@id="saveProductImage"]').click()
         time.sleep(0.5)
-        browser.evaluate_script('$(".mk-product-body").scrollTop(2000)')
+        browser.evaluate_script('$(".mk-product-body").scrollTop(5000)')
+
 
     def set_shipping_free(self,browser):
         # 运费设置
@@ -155,6 +166,7 @@ class pub_product:
         browser.find_by_text('请选择').click()
         time.sleep(0.5)
         browser.find_by_text('四川免运').click()
+        browser.evaluate_script('$(".mk-product-body").scrollTop(6000)')
 
     def set_logisticsWeight(self,browser):
         # 物流重量，使用jquery填充和单击输入框
@@ -181,9 +193,9 @@ pub.jump_to_edit(browser)
 pub.fill_product_info(browser)
 pub.fill_sku_name(browser)
 pub.fill_sku_price(browser)
-pub.set_share(browser)
-pub.set_product_picuture(browser)
+pub.set_sku_picture(browser)
 pub.choose_SoldQty_Inventory(browser)
+pub.set_share(browser)
 pub.set_product_picuture(browser)
 pub.set_shipping_free(browser)
 pub.set_sale_type(browser)

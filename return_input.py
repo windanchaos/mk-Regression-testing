@@ -54,13 +54,14 @@ def random_product_sku():
     return sku_names[random.randint(0,len(sku_names)-1)]
 
 def random_special_charactor():
-    sep_charactor =['\'','\\"','\&','\\','\\n','\\r','\\t','\\b','\\f','\<','\>',
-                    '<br/>','`','@','$','*','\^','#','?','_','&&']
-    return ''.join(random.sample(sep_charactor,5))
-for i in range(0,3):
-    print(i)
+    sep_charactor =['\'','\"','&','\\','\n','\r','\t','\b','\f','\<','\>',
+                    '<br/>','`','@','$','*','^','#','?','_','&&']
+    sep_charactor_0x = str(bytes([0x60,0x21,0x22,0x23,0x24,0x25,0x26,0x27,0x28,0x29,0x2a,0x2b,0x2c,0x2d,
+                        0x2e,0x2f,0x3c,0x3e,0x3f,0x40,0x5b,0x5c,0x5d,0x5e,0x5f,0x7b,0x7c,0x7d,0x7e,0x60]))
+    return ''.join(random.sample(sep_charactor_0x,5))
+    #return sep_charactor_0x
 
-print(datetime.datetime.now())
+
 
 productName = date_uni_string(random_special_charactor()+random_product_name())
 shortDes = date_uni_string(random_product_name()+random_special_charactor())
@@ -72,6 +73,3 @@ skuCode = random_string()
 share_title = random_special_charactor()+"分享经济"+time.strftime("%Y-%m-%d %H:%M", time.localtime())
 share_content =random_special_charactor()+"将社会海量、分散、闲置资源、平台化、协同化地集聚、复用与供需匹配"+\
                time.strftime("%Y-%m-%d %H:%M", time.localtime())
-
-for i in range(0,5):
-    print(random_xpath('a',2,5,'b'))
