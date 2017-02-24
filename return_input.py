@@ -1,4 +1,5 @@
-import time, sys, random, string
+# -*- coding: UTF-8 -*-
+import time, sys, random, string, datetime
 '''
 随机生成价格
 随机生成库存
@@ -6,6 +7,7 @@ import time, sys, random, string
 生成带时间戳的产品名称
 随机给范围数字
 '''
+
 
 def random_number_float(number):
     """
@@ -19,22 +21,21 @@ def date_uni_string(your_str):
     """
     返回时间+string，构造具有时间差别的名称
     """
-    return  your_str+time.strftime("%Y-%m-%d日%H:%M", time.localtime())
+    return  your_str+time.strftime("%Y-%m-%d %H:%M", time.localtime())
 
-def random_xpath(part1,random_number,*part2):
+def random_xpath(part1, min_number, max_number,part2=''):
     """
     返回随机的xpath或者其他类似的元素路径
     :param part1: 路径前半部分
-    :param random_number: 随机数的最大范围
+    :param min_number,max_number: 随机数的范围
     :param part2: 路径后半部分
     :return: 全路径
     """
-    num = random.randint(0, random_number)
+    num = random.randint(min_number, max_number)
     if len(part2)==0:
         return str(part1) + str(num)
     else:
-        part3=part2[0]
-        return str(part1)+str(num)+str(part3)
+        return str(part1)+str(num)+str(part2)
 
 def random_string():
     return ''.join(random.sample(['0','1','2','3','4','5','6','7','8','9','z',
@@ -56,7 +57,11 @@ def random_special_charactor():
     sep_charactor =['\'','\\"','\&','\\','\\n','\\r','\\t','\\b','\\f','\<','\>',
                     '<br/>','`','@','$','*','\^','#','?','_','&&']
     return ''.join(random.sample(sep_charactor,5))
-print(random_xpath('//*[@id="pager"]/ul/li[',random.randint(2,3),']'))
+for i in range(0,3):
+    print(i)
+
+print(datetime.datetime.now())
+
 productName = date_uni_string(random_special_charactor()+random_product_name())
 shortDes = date_uni_string(random_product_name()+random_special_charactor())
 product_sku = random_product_sku()
@@ -64,6 +69,9 @@ sku_quto = str(random.randint(10,3000000))
 sku_price = str(random_number_float(2))
 p_inventory =str(random.randint(100,5000))
 skuCode = random_string()
-share_title = random_special_charactor()+"分享经济"+time.strftime("%Y-%m-%d日%H:%M", time.localtime())
+share_title = random_special_charactor()+"分享经济"+time.strftime("%Y-%m-%d %H:%M", time.localtime())
 share_content =random_special_charactor()+"将社会海量、分散、闲置资源、平台化、协同化地集聚、复用与供需匹配"+\
-               time.strftime("%Y-%m-%d日%H:%M", time.localtime())
+               time.strftime("%Y-%m-%d %H:%M", time.localtime())
+
+for i in range(0,5):
+    print(random_xpath('a',2,5,'b'))

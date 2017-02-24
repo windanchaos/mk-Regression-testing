@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from splinter import Browser
 import time, sys, return_input
 import random, unittest
@@ -14,16 +15,22 @@ def login_console():
     browser.find_by_value('登    录').click()
 
 
-def choose_picture():
-    """选择图片控件统一方法"""
-    time.sleep(0.5)
-    picture_group=['方图','方图二','方图三']
-    browser.find_by_text(picture_group[random.randint(0,2)]).click()
-    time.sleep(0.5)
-    # 随机选取图片的分页
-    browser.find_by_xpath(return_input.random_xpath('//*[@id="pager"]/ul/li[',random.randint(2,3),']')).first.click()
-    # 拼接成随机点击的图片排列，并使用js执行动作。
-    browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[',random.randint(0,14),'].click()'))
+def choose_picture(n=1):
+    """
+    选择图片控件统一方法
+    :param n: 选择的图片数
+    """
+    for i in range(1,n):
+        time.sleep(0.5)
+        picture_group=['方图','方图二','方图三']
+        browser.find_by_text(picture_group[random.randint(0,2)]).click()
+        time.sleep(0.5)
+        if random.randint(1,2) == 1:
+            browser.find_by_xpath('//*[@id="pager"]/ul/li[2]/span').first.click()
+        else:
+            browser.find_by_xpath('//*[@id="pager"]/ul/li[3]/a').first.click()
+        # 拼接成随机点击的图片排列，并使用js执行动作。
+        browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[',0,14,'].click()'))
     browser.find_by_id("saveProductImage").click()
     time.sleep(0.5)
 
@@ -42,7 +49,7 @@ class pub_product:
     share_content = return_input.share_content
     def jump_to_edit(self,browser):
         browser.find_by_text('发布商品').click()
-        browser.find_by_id(return_input.random_xpath('item_', random.randint(1, 5))).first.click()
+        browser.find_by_id(return_input.random_xpath('item_', 1, 5)).first.click()
         browser.find_by_text('下一步').click()
 
     def fill_product_info(self,browser):
@@ -97,8 +104,19 @@ class pub_product:
         browser.find_by_id("code_yes").click()
         time.sleep(0.5)
         browser.evaluate_script('$("#chkSkuImg").click()')
-        browser.evaluate_script('$(".mk-product-body").scrollTop(500)')
+
+
+    def set_share(self,browser):
+        """设置分享内容"""
+        browser.evaluate_script('$(".mk-product-body").scrollTop(1000)')
         browser.evaluate_script('window.scrollTo(0,0)')
+        time.sleep(0.5)
+        browser.find_by_xpath('//*[@id="productInfo"]/div[5]/div[2]/div/div[1]/div/div/button').click()
+        time.sleep(0.5)
+        choose_picture()
+        browser.evaluate_script('$(".mk-product-body").scrollTop(1800)')
+        browser.find_by_id('shareTitle').fill(self.share_title)
+        browser.find_by_id('shareContent').fill(self.share_content)
 
     def set_sku_picture(self,browser):
         # sku 图片设置
@@ -113,29 +131,20 @@ class pub_product:
         browser.evaluate_script('$("#displayInventory").click()')
         browser.evaluate_script('$(".mk-product-body").scrollTop(1500)')
 
-    def set_share(self,browser):
-        """设置分享内容"""
-        browser.find_by_xpath('//*[@id="productInfo"]/div[5]/div[2]/div/div[1]/div/div/button').click()
-        time.sleep(0.5)
-        choose_picture()
-        browser.evaluate_script('$(".mk-product-body").scrollTop(1800)')
-        browser.find_by_id('shareTitle').fill(self.share_title)
-        browser.find_by_id('shareContent').fill(self.share_content)
+
 
     def set_product_picuture(self,browser):
         """配置图片"""
         # 方图
         browser.evaluate_script('$(".mk-product-body").scrollTop(2200)')
         browser.find_by_xpath('//*[@id="productInfo"]/div[6]/div[2]/div/div[1]/div/button').click()
-
-        for i in range(0,4):
-            choose_picture()
+        choose_picture(3)
         # 宽图
         browser.find_by_xpath('//*[@id="productInfo"]/div[6]/div[2]/div/div[3]/div/button').click()
         time.sleep(0.5)
         browser.find_by_text('长图一服装').click()
         time.sleep(0.5)
-        browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[',random.randint(0,14),'].click()'))
+        browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[',0,14,'].click()'))
         browser.find_by_xpath('//*[@id="saveProductImage"]').click()
         time.sleep(0.5)
         browser.evaluate_script('$(".mk-product-body").scrollTop(2000)')
@@ -157,9 +166,9 @@ class pub_product:
     def set_sale_type(self,browser):
         browser.find_by_name("saleType").click()
         browser.find_by_xpath("(//input[@name='stockReduceType'])[2]").click()
-        browser.find_by_id("toOn").click()
+        # browser.find_by_id("toOn").click()
         time.sleep(0.5)
-        browser.find_by_xpath('/html/body/div[1]/div/div[3]/a').click()
+        # browser.find_by_xpath('/html/body/div[1]/div/div[3]/a').click()
 
 # runTest
 
@@ -172,9 +181,9 @@ pub.jump_to_edit(browser)
 pub.fill_product_info(browser)
 pub.fill_sku_name(browser)
 pub.fill_sku_price(browser)
+pub.set_share(browser)
 pub.set_product_picuture(browser)
 pub.choose_SoldQty_Inventory(browser)
-pub.set_share(browser)
 pub.set_product_picuture(browser)
 pub.set_shipping_free(browser)
 pub.set_sale_type(browser)
