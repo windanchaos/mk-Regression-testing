@@ -2,16 +2,15 @@
 from splinter import Browser
 import time, sys, return_input
 import random, unittest
+import accout
 """通用方法"""
 # 修改了splinter默认点击元素的click方法，增加延迟0.5秒
+
 def login_console(browser):
     """登陆后台统一方法"""
-    accout = "18781901199"
-    passport = "miang521"
-    backgroundURL = "http://shop.51maike.com.cn"
-    browser.visit(backgroundURL)
-    browser.fill('account', accout)
-    browser.fill('password', passport)
+    browser.visit(accout.backgroundURL)
+    browser.fill('account', accout.accout)
+    browser.fill('password', accout.passport)
     browser.find_by_value('登    录').click()
 
 def choose_picture(browser,n=1):
