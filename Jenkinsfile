@@ -1,4 +1,4 @@
-
+Pipeline{
 def webents=[mk-aggregator,mk-smart-webent,mk-wm-msger,mk-app-webent,mk-job-webent,mk-openApi,mk-wm-webent,mk-yum-webent,mk-imgr-webent,mk-uic-webent,mk-qdragon-webent,mk-sn-webent,mk-intf-webent,mk-kunlun-webent,mk-imgr-rpc,mk-yum-rpc,mk-mdata-rpc,mk-uic-rpc,mk-sn-rpc]
 
 stage 'pull code'
@@ -53,3 +53,4 @@ for (int i = 1; i < webents.size()-4; i=i+3){
     parallel deloplist
 }
 
+}
