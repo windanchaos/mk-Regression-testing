@@ -5,7 +5,6 @@ stage 'pull code'
 node {
        sh "bash ~/ci/pull.sh"
      }
-}
 
 stage 'build aggregator'
 node {
@@ -23,7 +22,6 @@ for (int i = 1; i < webents.size()-4; i++3){
          node {
                 sh "bash ~/ci/build.sh ${i+1}"
               }
-         }
     },webents[${i+2}]: {
          node {
                 sh "bash ~/ci/build.sh ${i+2}"
@@ -43,7 +41,6 @@ for (int i = 1; i < webents.size()-4; i++3){
          node {
                 sh "bash ~/ci/deploy.sh ${i+1}"
               }
-         }
     },webents[${i+2}]: {
          node {
                 sh "bash ~/ci/deploy.sh ${i+2}"
