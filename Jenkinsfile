@@ -13,7 +13,7 @@ node {
 
 stage 'build webents'
 buildlist=[:]
-for (int i = 1; i < webents.size()-4; i++3){
+for (int i = 1; i < webents.size()-4; i=i+3){
     buildlist = webents[${i}]: {
          node {
                 sh "bash ~/ci/build.sh ${i}"
@@ -32,7 +32,7 @@ for (int i = 1; i < webents.size()-4; i++3){
 
 stage 'deploy'
 deloplist=[:]
-for (int i = 1; i < webents.size()-4; i++3){
+for (int i = 1; i < webents.size()-4; i=i+3){
     deloplist = webents[${i}]: {
          node {
                 sh "bash ~/ci/deploy.sh ${i}"
