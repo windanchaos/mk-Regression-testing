@@ -32,4 +32,22 @@ pipeline {
             }
         }
     }
+    stages {
+        stage('build webent2') {
+            steps {
+                sh "bash ~/ci/build.sh 3"
+                sh "bash ~/ci/build.sh 4"
+            }
+            steps {
+                sh "bash ~/ci/build.sh 5"
+                sh "bash ~/ci/build.sh 6"
+            }
+        }
+        stage('deploy webent') {
+            steps {
+                sh "bash ~/ci/deploy.sh 2"
+                sh "bash ~/ci/deploy.sh 15"
+            }
+        }
+    }
 }
