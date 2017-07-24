@@ -37,7 +37,7 @@ class Server(object):
         ssh_client.close()
         print(result.decode())
 
-    def sftp(self,password,local_file=os.path.expanduser('~')+os.path.sep+'sites.tar.gz',remote_path='/arthas/'+'sites.tar.gz'):
+    def sftp(self,password,local_file=os.path.join(os.path.expanduser('~'), 'sites.tar.gz'),remote_path='/arthas/'+'sites.tar.gz'):
         """公钥密钥登录"""
         '''指定本地的RSA私钥文件,如果建立密钥对时设置的有密码，password为设定的密码，如无不用指定password参数'''
         key_sftp = paramiko.RSAKey.from_private_key_file(
@@ -78,7 +78,7 @@ class Build(object):
                 os.chdir(webent_path)
                 try:
                     print("编译" + webent)
-                    subprocess.check_call(['mvn','-q','-ff','clean','install','-P',self.profile],shell=True)
+                    subprocess.check_call(['mvn', '-q', '-ff', 'clean', 'install', '-P', self.profile], shell=True)
                     print("编译完成！")
                 except subprocess.CalledProcessError:
                     print("编译错误！请修正代码重新编译！")
@@ -96,14 +96,14 @@ class Build(object):
         os.mkdir(sites_path)
         for site in self.webents:
             target_path = sites_path + os.path.sep + site + os.path.sep
-            ROOT_war_path = self.code_path + os.path.sep + site + os.path.sep + 'target' + os.path.sep + 'ROOT.war'
-            RPC_jar_path = self.code_path + os.path.sep + site + os.path.sep + 'target' + os.path.sep + site +'.jar'
-            RPC_lib_path = self.code_path + os.path.sep + site + os.path.sep + 'target' + os.path.sep + 'lib'
+            ROOT_war_path = os.path.join(self.code_path, site, 'target', 'ROOT.war')
+            RPC_jar_path = os.path.join(self.code_path, site, 'target', site + '.jar')
+            RPC_lib_path = os.path.join(self.code_path, site, 'target', 'lib')
             '''wm-msger的静态资源单独配置'''
-            Msger_resource_path=self.code_path + os.path.sep + site + os.path.sep + 'target' + os.path.sep + 'resources'
+            Msger_resource_path = os.path.join(self.code_path, site, 'target', 'resources')
             if os.path.exists(ROOT_war_path):
                 os.mkdir(target_path)
-                copy2(ROOT_war_path,target_path)
+                copy2(ROOT_war_path, target_path)
             if os.path.exists(RPC_jar_path):
                 copytree(RPC_lib_path, target_path + os.path.sep + 'lib')
                 copy2(RPC_jar_path, target_path)
@@ -134,7 +134,7 @@ class Git_config(object):
         os.chdir(self.code_path)
         try:
             subprocess.check_call(['git', 'checkout', self.branch], shell=True)
-            subprocess.check_call(['git', 'pull','origin', self.branch], shell=True)
+            subprocess.check_call(['git', 'pull', 'origin', self.branch], shell=True)
         except subprocess.CalledProcessError:
             print ("ERROR")
 
