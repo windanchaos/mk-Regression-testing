@@ -95,7 +95,8 @@ class Build(object):
             rmtree(sites_path)
         os.mkdir(sites_path)
         for site in self.webents:
-            target_path = sites_path + os.path.sep + site + os.path.sep
+            site_name =self.get_site_name(site)
+            target_path = sites_path + os.path.sep + site_name + os.path.sep
             ROOT_war_path = self.code_path + os.path.sep + site + os.path.sep + 'target' + os.path.sep + 'ROOT.war'
             RPC_jar_path = self.code_path + os.path.sep + site + os.path.sep + 'target' + os.path.sep + site +'.jar'
             RPC_lib_path = self.code_path + os.path.sep + site + os.path.sep + 'target' + os.path.sep + 'lib'
@@ -118,7 +119,14 @@ class Build(object):
             if os.path.exists(os.path.expanduser('~')+os.path.sep+"sites.tar.gz"):
                 os.remove(os.path.expanduser('~')+os.path.sep+"sites.tar.gz")
             move("sites.tar.gz",os.path.expanduser('~'))
+    '''取得webent发布的名称'''
+    def get_site_name(self,site):
+        if  site.find('webent') != -1:
+            site_name = site[(site.index('-') + 1):site.rindex('-')]
+        else:
+            site_name = site[(site.index('-') + 1):]
 
+        return site_name
 
 class Git_config(object):
     """
@@ -138,14 +146,12 @@ class Git_config(object):
         except subprocess.CalledProcessError:
             print ("ERROR")
 
-#git=Git_config("D:\Code\ArhasMK",'feature/10262')
-#git.pull()
+# git=Git_config("D:\Code\ArhasMK",'develop')
+# git.pull()
 build=Build("D:\Code\ArhasMK",'st-https',['mk-aggregator','mk-wm-webent','mk-lake-webent','mk-imgr-webent','mk-lake-imgr-webent'])
-#build.mvn()
-#build.tar_targets()
-server=Server('175.155.75.217','admin',5555)
-server.sftp('Yam2017#')
+# build.mvn()
+build.tar_targets()
+#server=Server('175.155.75.217','admin',5555)
+#server.sftp('Yam2017#')
 #server.ssh()
-
-
 
