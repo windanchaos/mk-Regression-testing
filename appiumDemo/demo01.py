@@ -4,7 +4,7 @@ import unittest
 from appium import webdriver
 from time import sleep
 
-
+#　测试结论：微信独立webdriver无法被appium驱动。
 desired_caps = {}
 desired_caps['app'] = ''
 desired_caps['appPackage'] = 'com.tencent.mm'

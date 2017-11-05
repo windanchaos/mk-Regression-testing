@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
-from common import *
-import time, sys, return_input
+
+from ui_test.common import *
 
 # 修改了splinter默认点击元素的click方法，增加延迟0.5秒
 # 变量
 productName = return_input.productName
 shortDes = return_input.shortDes
-productCode = return_input.random_special_charactor()+'MAIKEt'
+productCode = return_input.random_special_charactor() + 'MAIKEt'
 share_title = return_input.share_title
 share_content = return_input.share_content
 def jump_to_edit(browser):
@@ -105,7 +105,7 @@ def set_product_picuture(browser):
     time.sleep(0.5)
     browser.find_by_text('长图一服装').click()
     time.sleep(0.5)
-    browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[',0,14,'].click()'))
+    browser.evaluate_script(return_input.random_xpath('$("li[onclick]")[', 0, 14, '].click()'))
     browser.find_by_xpath('//*[@id="saveProductImage"]').click()
     time.sleep(0.5)
     browser.evaluate_script('$(".mk-product-body").scrollTop(5000)')
