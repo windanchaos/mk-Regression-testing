@@ -36,10 +36,11 @@ def dirlist(path, allfile):
         else:
             allfile.append(filepath)
     return allfile
-files=dirlist('js',[])
+
+files=dirlist('file',[])
 for f in files:
     des=f.replace(os.sep, '/').decode('gb2312',errors='ignore')
-    # print (des)
+    print (des)
     # bucket.put_object_from_file(des, f)
     with open(f ,'rb') as fileobj:
         bucket.put_object(des, fileobj, )
