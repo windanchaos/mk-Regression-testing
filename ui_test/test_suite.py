@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import unittest
-from pub_product import *
+from ui_test.pub_product import *
 if __name__ == '__main__':
     suite = unittest.TestSuite()
     suite.addTests(unittest.TestLoader().loadTestsFromTestCase(Test_pub_product))
