@@ -62,16 +62,17 @@ def compute_signature(parameters, access_key_secret):
 
 
 def compose_url(user_params):
-    timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.localtime())
 
     parameters = { \
-        'Format': 'JSON', \
-        'Version': '2014-11-11', \
         'AccessKeyId': access_key_id, \
+        'accesskeysecret': access_key_secret, \
+        'Format': 'JSON', \
+        'Version': '2015-01-09', \
         'SignatureVersion': '1.0', \
         'SignatureMethod': 'HMAC-SHA1', \
         'SignatureNonce': str(uuid.uuid1()), \
-        'TimeStamp': timestamp, \
+        'Timestamp': timestamp,\
         }
 
     for key in user_params.keys():
@@ -107,8 +108,6 @@ def setup_credentials():
 
 if __name__ == '__main__':
     parser = OptionParser("%s -u https://api_url Param1=Value1 Param2=Value2\n" % sys.argv[0])
-    parser.add_option("-i", "--id", dest="accesskeyid", help="specify access key id")
-    parser.add_option("-s", "--secret", dest="accesskeysecret", help="specify access key secret")
     parser.add_option("-u", "--url", action="store", dest="api_url", help="the api base url")
 
     (options, args) = parser.parse_args()

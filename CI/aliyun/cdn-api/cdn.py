@@ -16,7 +16,7 @@ import traceback
 
 access_key_id = ''
 access_key_secret = ''
-cdn_server_address = 'https://cdn.aliyuncs.com'
+cdn_server_address = 'http://alidns.aliyuncs.com'
 CONFIGFILE = os.getcwd() + '/aliyun.ini'
 CONFIGSECTION = 'Credentials'
 cmdlist = '''
@@ -25,12 +25,11 @@ cmdlist = '''
 
 
 def percent_encode(str):
-    res = urllib.quote(str.decode(sys.stdin.encoding).encode('utf8'), '')
+    res = urllib.quote(str.decode('utf-8').encode('utf8'), '')
     res = res.replace('+', '%20')
     res = res.replace('*', '%2A')
     res = res.replace('%7E', '~')
     return res
-
 
 def compute_signature(parameters, access_key_secret):
     sortedParameters = sorted(parameters.items(), key=lambda parameters: parameters[0])
